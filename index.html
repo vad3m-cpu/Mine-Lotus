@@ -158,13 +158,13 @@ input[type=time],select{font:inherit;background:transparent;color:var(--ink);bor
 body{overflow-x:hidden}
 .pond{height:540px;width:min(calc(100vw - 24px),980px);margin-left:calc(50% - min(50vw - 12px,490px));background-size:cover;background-position:center}
 .mp{display:flex;align-items:center;gap:12px;margin:10px 0;padding:8px 12px;border-radius:999px;background:#0000001c}
-.mpf{position:fixed;left:-9999px;width:220px;height:220px;border:0}
+.mpf{position:fixed;right:0;bottom:0;width:220px;height:220px;border:0;opacity:.01;pointer-events:none;z-index:-1}
 .vin{flex:none;width:48px;height:48px;border-radius:50%;background:#222 center/cover;border:3px solid #151515;box-shadow:inset 0 0 0 9px #0005,0 3px 10px #0004;animation:spin 6s linear infinite}
 .mp.off .vin{animation-play-state:paused}
 @keyframes spin{to{transform:rotate(360deg)}}
 .mp .sub{flex:1;color:inherit;opacity:.75}
 .mpb{border:0;border-radius:50%;width:36px;height:36px;background:var(--pink);color:#fff;cursor:pointer}
-#fsong,#pfn,#vcode,#vq,#fl textarea{width:100%;margin:8px 0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+#fsong,#pfn,#pfpn,#vcode,#vq,#fl textarea{width:100%;margin:8px 0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
 #fl textarea{border-style:dashed;border-color:var(--pink)}
 .code{letter-spacing:.18em;font-weight:400;color:var(--leaf)}
 .sail{position:absolute;z-index:6;left:46%;bottom:14px;width:64px;pointer-events:none;filter:drop-shadow(0 0 14px #fff8);animation:sail 4.6s ease-in forwards}
@@ -217,6 +217,36 @@ html.calm #lots,html.calm .pad{transform:none;translate:none}
 .pc:hover{transform:translateY(-3px);box-shadow:0 12px 26px -14px var(--pink)}
 .pc img{width:54px;height:54px;border-radius:50%;object-fit:cover;background:var(--pink2)}
 .pc b{font-weight:400;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- v4: โปรไฟล์มุมขวา · เพื่อน · ขออนุญาตปลูกต่อ · เพลงมีเสียง ---- */
+.meb{display:flex;align-items:center;gap:6px;border:0;background:none;color:var(--ink);font:inherit;cursor:pointer;padding:2px 10px 2px 2px;border-radius:999px;max-width:46vw;transition:box-shadow .2s}
+.meb:hover,.meb:focus-visible{box-shadow:0 0 0 3px var(--pink);outline:none}
+.meb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.auth .meb img{margin:0}.auth .meb img:hover{box-shadow:none}
+.bell{position:relative;padding:5px 11px}
+#bdg{position:absolute;top:-7px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font-size:.68rem;font-weight:400;display:grid;place-items:center}
+#bdg[hidden]{display:none}
+#pm,#bm{display:none;position:fixed;inset:0;z-index:72;background:#0006;backdrop-filter:blur(8px);justify-content:center;padding:18px;overflow-y:auto}
+#pm.on,#bm.on{display:flex}
+.pmc{width:100%;max-width:440px;background:var(--bg);margin:auto}
+.pmh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.pmv{position:relative;height:104px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--w1),var(--w2) 55%,var(--w3)) center/cover}
+.pmvt{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:var(--card);backdrop-filter:blur(8px);max-width:calc(100% - 20px)}
+.pmvt b{font-weight:400}.pmvt .sub{font-size:.74rem}
+.pcl{flex:none;width:54px;height:54px;border-radius:50%;background:var(--pink2);display:grid;place-items:center;font-style:normal;font-size:1.6rem;overflow:hidden}
+.pcl img{width:100%;height:100%;object-fit:cover}
+.pmvt .pcl{width:36px;height:36px;font-size:1.1rem}
+.pfl2{display:block;margin:10px 0 0}.pfl2 small{opacity:.8}
+.pcn{font-size:.78rem}
+.bh{margin:14px 0 2px}
+.bi{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
+.bj{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end}
+.bf2{display:flex;align-items:center;gap:10px;min-width:0}
+.bf2 img{width:36px;height:36px;border-radius:50%;object-fit:cover;background:var(--pink2)}
+.mp.need .mpb{animation:mpn 1.4s ease-in-out infinite}
+@keyframes mpn{50%{box-shadow:0 0 0 9px #f1a9c366}}
+#tt{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:95;max-width:88vw;padding:10px 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:.88rem;opacity:0;pointer-events:none;transition:.35s;text-align:center}
+#tt.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -305,14 +335,7 @@ html.calm #lots,html.calm .pad{transform:none;translate:none}
 <div class="card" id="vc" style="margin-top:16px"><p class="prompt">เยี่ยมบ่อ</p>
 <p class="sub" style="margin:0 0 8px">เลือกบ่อที่เปิดให้เยี่ยมชมได้เลย ไม่ต้องใส่รหัส</p><div class="row" style="justify-content:flex-start"><button class="save" id="vrand">สุ่มเยี่ยมบ่อ</button><button class="chip" id="vref">รีเฟรชรายการ</button></div><input id="vq" placeholder="ค้นหาชื่อบ่อ" autocomplete="off" style="margin:10px 0 0">
 <div class="sub" id="vmsg" style="min-height:1.4em"></div><div class="pl" id="pl"></div><div class="sub" id="fmine" style="margin-top:10px"></div></div>
-<details class="card" id="pfc" style="margin-top:16px"><summary style="cursor:pointer">โปรไฟล์และหน้าตาบ่อของฉัน</summary>
-<div class="pfr"><img id="pfa-i" class="pfa" alt=""><label class="chip">เปลี่ยนรูปโปรไฟล์ (png / gif)<input type="file" id="pfa" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label></div>
-<input id="pfn" maxlength="30" placeholder="ชื่อที่แสดง" autocomplete="off">
-<div class="row" style="justify-content:flex-start;margin:8px 0"><label class="chip">ภาพพื้นบ่อ<input type="file" id="pfb" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pfbx">ล้าง</button><label class="chip">ภาพดอกบัวของฉัน<input type="file" id="pfl" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pflx">ล้าง</button></div>
-<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pfp" checked> ให้คนอื่นเยี่ยมบ่อของฉันได้ (เห็นเฉพาะโน้ตที่เปิดให้เห็น)</label>
-<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pubdef"> โน้ตใหม่ให้คนเยี่ยมบ่อเห็นเป็นค่าเริ่มต้น</label><div style="margin:6px 0"><button class="chip" id="puball">เปิดให้เยี่ยมชมเห็นโน้ตเก่าทั้งหมด</button> <span class="sub">(ยกเว้นที่ซ่อน 🔒 และโน้ตการนอน)</span></div>
-<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="calm"> ลดแอนิเมชัน</label>
-<div class="row"><span class="sub" id="pfm"></span><button class="save" id="pfs">บันทึกโปรไฟล์</button></div></details>
+
 <details class="card" style="margin-top:22px"><summary style="cursor:pointer">☁️ ย้ายโน้ตไปเครื่องอื่น (สำรอง / นำเข้า)</summary><p class="sub" style="margin:10px 0">กด “คัดลอกโค้ด” ในเครื่องเดิม แล้วนำไปวางในกล่องนี้บนเครื่องใหม่ แล้วกด “นำเข้า” (ไม่ต้องล็อกอิน)</p><textarea id="bk" style="min-height:70px" placeholder="วางโค้ดสำรองที่นี่…"></textarea><div class="row"><span class="sub" id="bkmsg"></span><span><button class="save" id="exp" style="background:var(--pink)">คัดลอกโค้ด</button> <button class="save" id="imp">นำเข้า</button></span></div></details>
 <div id="sleepchart"></div>
 <h2>โน้ตของฉัน <button class="chip" id="wk" style="margin-left:8px">🖼️ การ์ดสัปดาห์นี้</button></h2>
@@ -321,9 +344,24 @@ html.calm #lots,html.calm .pad{transform:none;translate:none}
 </main>
 
 <div id="vo"><div class="card"><p class="prompt">ระบายออกมาเลย ไม่มีใครเห็น ไม่ต้องเรียบเรียง…</p><textarea id="vt" style="min-height:200px"></textarea><div class="row"><button class="chip" id="vclose">ปิด</button><span><button class="save" id="vfly" style="background:var(--pink)">🫧 ปล่อยให้ลอยไป</button> <button class="save" id="vkeep">เก็บเป็นโน้ต</button></span></div></div></div>
-<div id="vm"><div class="vbox"><div class="vh"><img id="vav" alt=""><div><b id="vnm"></b><div class="sub" id="vcnt"></div></div><button class="chip" id="vnext">บ่อถัดไป</button><button class="chip" id="vx">ปิด</button></div><div class="pond" id="vpond"><div id="vlots"></div><div class="pop" id="vpop"></div></div><div class="sub" id="vtoast" style="min-height:1.6em;margin:8px 0"></div><div class="sub" id="vempty" style="display:none">บ่อนี้ยังไม่มีข้อความที่เปิดให้เยี่ยมชม</div><div id="vlist"></div></div></div>
-<div id="lc" role="dialog\" aria-label="ดอกบัวที่ลอยมา"><div id="lcr"></div><div id="lcb"></div><button class="chip" id="lcx">ปิดการ์ด</button></div>
+<div id="vm"><div class="vbox"><div class="vh"><img id="vav" alt=""><div><b id="vnm"></b><div class="sub" id="vcnt"></div></div><button class="chip" id="vfr" type="button" style="display:none"></button><button class="chip" id="vnext">บ่อถัดไป</button><button class="chip" id="vx">ปิด</button></div><div class="pond" id="vpond"><div id="vlots"></div><div class="pop" id="vpop"></div></div><div class="sub" id="vtoast" style="min-height:1.6em;margin:8px 0"></div><div class="sub" id="vempty" style="display:none">บ่อนี้ยังไม่มีข้อความที่เปิดให้เยี่ยมชม</div><div id="vlist"></div></div></div>
+<div id="lc" role="dialog" aria-label="ดอกบัวที่ลอยมา"><div id="lcr"></div><div id="lcb"></div><button class="chip" id="lcx">ปิดการ์ด</button></div>
 <div id="br" role="dialog" aria-label="หายใจ"><div class="orb"><svg viewBox="0 0 24 24"><use href="#i-lotus"/></svg></div><div class="bt"></div><div class="sub bc"></div><div class="sub">เข้า 4 · กลั้น 7 · ออก 8</div><button class="chip" id="bx">ปิด</button></div>
+<div id="pm" role="dialog" aria-label="โปรไฟล์และหน้าตาบ่อของฉัน"><div class="card pmc">
+<div class="pmh"><p class="prompt" style="margin:0">โปรไฟล์และหน้าตาบ่อของฉัน</p><button class="chip" id="pmx" type="button">ปิด</button></div>
+<div class="pmv" id="pmv"><div class="pmvt"><i class="pcl" id="pmvl">🪷</i><div><b id="pmvn"></b><div class="sub" id="pmvs"></div></div></div></div>
+<div class="pfr"><img id="pfa-i" class="pfa" alt=""><label class="chip">เปลี่ยนรูปโปรไฟล์ (png / gif)<input type="file" id="pfa" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label></div>
+<label class="sub pfl2" for="pfn">ชื่อของฉัน <small>· คนอื่นจะเห็นก็ต่อเมื่อเป็นเพื่อนกันแล้ว</small></label>
+<input id="pfn" maxlength="30" placeholder="ชื่อที่แสดง" autocomplete="off">
+<label class="sub pfl2" for="pfpn">ชื่อบ่อ <small>· ทุกคนเห็นตอนค้นหา / เยี่ยมบ่อ (ไม่แสดงชื่อและรหัสของเรา)</small></label>
+<input id="pfpn" maxlength="40" placeholder="เช่น บ่อน้ำค้างยามเช้า" autocomplete="off">
+<div class="row" style="justify-content:flex-start;margin:8px 0"><label class="chip">ภาพพื้นบ่อ<input type="file" id="pfb" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pfbx" type="button">ล้าง</button><label class="chip">ภาพดอกบัวของฉัน<input type="file" id="pfl" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pflx" type="button">ล้าง</button></div>
+<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pfp" checked> ให้คนอื่นเยี่ยมบ่อของฉันได้ (เห็นเฉพาะโน้ตที่เปิดให้เห็น)</label>
+<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pubdef"> โน้ตใหม่ให้คนเยี่ยมบ่อเห็นเป็นค่าเริ่มต้น</label><div style="margin:6px 0"><button class="chip" id="puball" type="button">เปิดให้เยี่ยมชมเห็นโน้ตเก่าทั้งหมด</button> <span class="sub">(ยกเว้นที่ซ่อน 🔒 และโน้ตการนอน)</span></div>
+<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="calm"> ลดแอนิเมชัน</label>
+<div class="row"><span class="sub" id="pfm"></span><button class="save" id="pfs" type="button">บันทึกโปรไฟล์</button></div></div></div>
+<div id="bm" role="dialog" aria-label="กล่องจดหมายบ่อ"><div class="card pmc"><div class="pmh"><p class="prompt" style="margin:0">กล่องจดหมายบ่อ</p><button class="chip" id="bmx" type="button">ปิด</button></div><div id="bmb"></div></div></div>
+<div id="tt" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const ICON_DIR='',POND_PHOTO='';let PF={};const CALM=()=>document.documentElement.classList.contains('calm'),su=u=>/^https:\/\/[^\s"'<>\\]+$/.test(u||'')?u:'',BLANK='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';try{PF=JSON.parse(localStorage.getItem('lotus-pf')||'{}')||{};if(localStorage.getItem('lotus-calm')==='1')document.documentElement.classList.add('calm')}catch(e){}/* ICON_DIR='icons/' = ใช้ไฟล์ icons/<ชื่อ>.png แทนไอคอน SVG · POND_PHOTO='pond.jpg' = รูปจริงเป็นพื้นบ่อ */
@@ -451,7 +489,7 @@ if(prev){try{localStorage.setItem('lotus-notes-'+prev.id,JSON.stringify(notes))}
 return}
 const md=u.user_metadata||{};$('gate').style.display='none';$('lm').classList.remove('on');
 const av=(PF.avatar||md.avatar_url||'').replace(/"/g,'');
-a.innerHTML=(av?'<img src="'+av+'" alt="">':'')+'<span class="sub">'+esc(PF.name||md.full_name||md.name||u.email||'บัญชีของฉัน')+'</span><button class="tab" id="lo">ออก</button>';
+a.innerHTML='<button class="meb" id="meb" type="button" title="โปรไฟล์และหน้าตาบ่อของฉัน"><img src="'+(av||BLANK)+'" alt=""><span class="sub">'+esc(PF.name||md.full_name||md.name||u.email||'บัญชีของฉัน')+'</span></button><button class="chip bell" id="bell" type="button" aria-label="กล่องจดหมายบ่อ">🔔<b id="bdg" hidden></b></button><button class="tab" id="lo">ออก</button>';
 $('lo').onclick=()=>{if($('sync').textContent&&!confirm('ยังมีโน้ตที่ไม่ขึ้นระบบ ถ้าออกตอนนี้จะซ่อนไว้ในเครื่องนี้จนกว่าจะล็อกอินบัญชีเดิม ออกไหม?'))return;sb.auth.signOut()};
 try{const bk=JSON.parse(localStorage.getItem('lotus-notes-'+u.id)||'[]'),hv=new Set(notes.map(n=>String(n.id)));bk.forEach(n=>{if(n&&n.id&&!hv.has(String(n.id)))notes.push(n)});notes.sort((a,b)=>b.d-a.d)}catch(e){}
 await pull();
@@ -551,7 +589,20 @@ const EXT={'image/png':'png','image/gif':'gif','image/jpeg':'jpg','image/webp':'
 let st='pink',inb=[],curF=null,V=null,vp=null,vcur=null,fimgU=null,code=null,pend=null;
 try{const q=new URLSearchParams(location.search).get('pond');if(q){pend=q.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8);sessionStorage.setItem('lotus-pond',pend);history.replaceState(null,'',location.pathname)}else pend=sessionStorage.getItem('lotus-pond')}catch(e){}
 /* ---- เล่นเพลง: ปุ่มหยุด/เล่น ---- */
-document.addEventListener('click',e=>{const b=e.target.closest('.mpb');if(!b)return;e.stopPropagation();const m=b.parentElement,off=m.classList.toggle('off');m.querySelector('iframe').contentWindow.postMessage(JSON.stringify({event:'command',func:off?'pauseVideo':'playVideo',args:[]}),'*');b.textContent=off?'▶':'❚❚'},true);
+/* ---- เล่นเพลง: บังคับเปิดเสียง · ถ้าเบราว์เซอร์บล็อก จะขึ้นปุ่มให้แตะเพื่อเปิดเสียง ---- */
+const ytc=(f,fn,a)=>{try{f.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args:a||[]}),'*')}catch(e){}};
+const mpUi=m=>{const b=m.querySelector('.mpb'),t=m.querySelector('.sub'),ps=m.dataset.ps,mu=m.dataset.mu;
+if(m.classList.contains('off')){b.textContent='▶';t.textContent='หยุดไว้';m.classList.remove('need');return}
+if(ps==='1'&&mu!=='1'){b.textContent='❚❚';t.textContent='กำลังเล่น';m.classList.remove('need')}
+else if(ps!==undefined&&(mu==='1'||ps==='-1'||ps==='2'||ps==='5')){b.textContent='🔊';t.textContent='แตะเพื่อเปิดเสียง';m.classList.add('need')}};
+document.addEventListener('load',e=>{const f=e.target;if(!f||f.tagName!=='IFRAME'||!f.classList||!f.classList.contains('mpf'))return;
+try{f.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*')}catch(_){}
+[0,400,1200,2500].forEach(t=>setTimeout(()=>{if(!f.isConnected)return;const m=f.parentElement;if(!m||m.classList.contains('off'))return;ytc(f,'unMute');ytc(f,'setVolume',[100]);ytc(f,'playVideo')},t))},true);
+window.addEventListener('message',e=>{if(!/youtube/.test(e.origin))return;let d;try{d=JSON.parse(e.data)}catch(_){return}const i=d&&d.info;if(!i)return;
+document.querySelectorAll('.mpf').forEach(f=>{if(f.contentWindow!==e.source)return;const m=f.parentElement;if(i.playerState!==undefined)m.dataset.ps=String(i.playerState);if(i.muted!==undefined)m.dataset.mu=i.muted?'1':'0';mpUi(m)})});
+document.addEventListener('click',e=>{const b=e.target.closest('.mpb');if(!b)return;e.stopPropagation();const m=b.parentElement,f=m.querySelector('iframe');
+if(m.classList.contains('need')||m.classList.contains('off')){m.classList.remove('off','need');ytc(f,'unMute');ytc(f,'setVolume',[100]);ytc(f,'playVideo');m.dataset.mu='0';m.dataset.ps='3';b.textContent='❚❚';m.querySelector('.sub').textContent='กำลังเล่น'}
+else{m.classList.add('off');ytc(f,'pauseVideo');mpUi(m)}},true);
 /* ---- อัปโหลดรูป (png / gif / jpg / webp) ไป Supabase Storage ---- */
 const shrink=(f,mx,q)=>new Promise(r=>{const im=new Image();im.onload=()=>{const k=Math.min(1,mx/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>r(b||f),'image/webp',q);URL.revokeObjectURL(im.src)};im.onerror=()=>r(f);im.src=URL.createObjectURL(f)});
 async function up(f,say){if(!f)return null;if(!me){$('lm').classList.add('on');say('เข้าสู่ระบบก่อนนะ');return null}
@@ -572,17 +623,17 @@ out(await shrink(f,720,.72))};
 /* ---- โน้ต: เปิด/ปิดให้ผู้เยี่ยมชมเห็น ---- */
 window.togglePub=id=>{const n=notes.find(x=>String(x.id)===String(id));if(!n||n.lock||n.t==='sleep')return;n.pub=!n.pub;store();if(me)sb.from('notes').update({pub:n.pub}).eq('id',n.id).then(()=>{});render()};
 $('list').addEventListener('click',e=>{const b=e.target.closest('.pubt');if(b)togglePub(b.dataset.id)});
-function plant(n,from){const m={id:Date.now(),t:'free',m:n.m||'🌸',x:n.x||'',d:Date.now(),img:su(n.img)||null,song:n.song||null,lock:false,pin:false,pub:false,sl:null,src:from||'คนแปลกหน้า'};notes.unshift(m);fresh=m.id;store();render();if(me)sb.from('notes').insert(row(m)).then(()=>{})}
+function plant(n,from,quiet){const m={id:Date.now(),t:'free',m:n.m||'🌸',x:n.x||'',d:Date.now(),img:su(n.img)||null,song:n.song||null,lock:false,pin:false,pub:false,sl:null,src:from||'คนแปลกหน้า'};notes.unshift(m);if(!quiet)fresh=m.id;store();render();if(me)sb.from('notes').insert(row(m)).then(()=>{})}
 /* ---- โปรไฟล์ ---- */
-function hdr(){if(!me)return;const a=$('auth'),md=me.user_metadata||{},av=su(PF.avatar)||su(md.avatar_url),sp=a.querySelector('span.sub');if(sp)sp.textContent=PF.name||md.full_name||md.name||me.email||'บัญชีของฉัน';let im=a.querySelector('img');if(!im){im=new Image();im.alt='';a.prepend(im)}im.src=av||BLANK;im.title='กดเพื่อเปลี่ยนรูปโปรไฟล์'}
-$('auth').addEventListener('click',e=>{if(e.target.closest('img'))$('pfa').click()});
-function applyPF(){const pw=$('pondwrap'),bg=su(PF.pond_bg);pw.classList.toggle('cb',!!bg);pw.style.backgroundImage=bg?'url("'+bg+'")':(POND_PHOTO?'linear-gradient(#0000,#0003),url('+POND_PHOTO+')':'');hdr();$('pfa-i').src=su(PF.avatar)||BLANK;$('pfn').value=PF.name||'';$('pfp').checked=PF.pond_public!==false;pond();try{localStorage.setItem('lotus-pf',JSON.stringify(PF))}catch(e){}}
-async function loadP(){const{data,error}=await sb.rpc('my_profile');if(error||!data||!data[0])return;const p=data[0];PF={name:p.name,avatar:p.avatar,pond_bg:p.pond_bg,lotus_img:p.lotus_img,pond_public:p.pond_public};code=p.code;applyPF();$('fmine').innerHTML='รหัสบ่อของฉัน <b class="code">'+esc(code)+'</b> <button class="chip" id="cpc">คัดลอกลิงก์เชิญเยี่ยมบ่อ</button>'}
-async function saveP(){if(!me)return;const{error}=await sb.rpc('save_profile',{p_name:PF.name||null,p_avatar:PF.avatar||null,p_bg:PF.pond_bg||null,p_lotus:PF.lotus_img||null,p_public:PF.pond_public!==false});pfm(error?error.message:'บันทึกแล้ว');applyPF()}
+function hdr(){if(!me)return;const b=$('meb');if(!b)return;const md=me.user_metadata||{},av=su(PF.avatar)||su(md.avatar_url);b.querySelector('span').textContent=PF.name||md.full_name||md.name||me.email||'บัญชีของฉัน';b.querySelector('img').src=av||BLANK}
+$('auth').addEventListener('click',e=>{if(e.target.closest('#meb'))openPM();else if(e.target.closest('#bell'))openBell()});
+function applyPF(){const pw=$('pondwrap'),bg=su(PF.pond_bg);pw.classList.toggle('cb',!!bg);pw.style.backgroundImage=bg?'url("'+bg+'")':(POND_PHOTO?'linear-gradient(#0000,#0003),url('+POND_PHOTO+')':'');hdr();$('pfa-i').src=su(PF.avatar)||BLANK;$('pfn').value=PF.name||'';$('pfpn').value=PF.pond_name||'';pvw();$('pfp').checked=PF.pond_public!==false;pond();try{localStorage.setItem('lotus-pf',JSON.stringify(PF))}catch(e){}}
+async function loadP(){const{data,error}=await sb.rpc('my_profile');if(error||!data||!data[0])return;const p=data[0];PF={name:p.name,avatar:p.avatar,pond_bg:p.pond_bg,lotus_img:p.lotus_img,pond_public:p.pond_public,pond_name:p.pond_name};code=p.code;applyPF();$('fmine').innerHTML='ชวนเพื่อนมาเยี่ยมบ่อของฉัน <button class="chip" id="cpc">คัดลอกลิงก์เชิญ</button> <span class="sub">(คนที่เปิดลิงก์จะเห็นแค่ชื่อบ่อ)</span>'}
+async function saveP(){if(!me)return;const{error}=await sb.rpc('save_profile',{p_name:PF.name||null,p_avatar:PF.avatar||null,p_bg:PF.pond_bg||null,p_lotus:PF.lotus_img||null,p_public:PF.pond_public!==false,p_pond_name:PF.pond_name||null});pfm(error?error.message:'บันทึกแล้ว');applyPF()}
 const pick=(id,key)=>{$(id).onchange=async e=>{const u=await up(e.target.files[0],t=>{pfm(t);if(t)alert(t)});e.target.value='';if(u){PF[key]=u;saveP()}}};
 pick('pfa','avatar');pick('pfb','pond_bg');pick('pfl','lotus_img');
 $('pfbx').onclick=()=>{PF.pond_bg=null;saveP()};$('pflx').onclick=()=>{PF.lotus_img=null;saveP()};
-$('pfs').onclick=()=>{if(!me){$('lm').classList.add('on');return}PF.name=$('pfn').value.trim();PF.pond_public=$('pfp').checked;saveP()};
+$('pfs').onclick=()=>{if(!me){$('lm').classList.add('on');return}PF.name=$('pfn').value.trim();PF.pond_name=$('pfpn').value.trim();PF.pond_public=$('pfp').checked;saveP()};
 const pd=$('pubdef');pd.checked=localStorage.getItem('lotus-pubdef')==='1';$('pubk').checked=pd.checked;pd.onchange=()=>{try{localStorage.setItem('lotus-pubdef',pd.checked?'1':'0')}catch(e){}$('pubk').checked=pd.checked};
 $('puball').onclick=()=>{const l=notes.filter(n=>!n.lock&&n.t!=='sleep'&&!n.pub);if(!l.length){pfm('ไม่มีโน้ตที่ต้องเปิด');return}if(!confirm('เปิดให้คนที่มาเยี่ยมบ่อเห็นโน้ตเก่า '+l.length+' โน้ต?'))return;l.forEach(n=>n.pub=true);store();render();if(me)sb.from('notes').update({pub:true}).in('id',l.map(n=>n.id)).then(r=>pfm(r.error?r.error.message:'เปิดให้เห็นแล้ว '+l.length+' โน้ต'))};
 const calm=$('calm');calm.checked=CALM();calm.onchange=()=>{document.documentElement.classList.toggle('calm',calm.checked);try{localStorage.setItem('lotus-calm',calm.checked?'1':'0')}catch(e){}};
@@ -614,31 +665,76 @@ else if(b.classList.contains('fi'))lcard(inb[+b.dataset.j],'จากใคร�
 const dt=n=>new Date(Number(n)).toLocaleString('th-TH',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 function vdeco(){vp.querySelectorAll('.dc2').forEach(x=>x.remove());let h='';for(let i=0;i<4;i++)h+=`<i class="pad dc2" style="left:${R(0,88)}%;top:${R(35,86)}%;width:${R(50,90)}px;height:${R(40,70)}px;transform:rotate(${R(0,360)}deg)"></i>`;for(let i=0;i<3;i++)h+=`<i class="rip dc2" style="left:${R(10,70)}%;top:${R(20,70)}%;width:90px;height:60px;animation-delay:${i*2}s"></i>`;for(let i=0;i<5;i++)h+=`<i class="pt dc2" style="top:${R(5,90)}%;animation-duration:${R(14,26)}s;animation-delay:${-R(0,20)}s"></i>`;vp.insertAdjacentHTML('afterbegin',h)}
 function closeVP(){const p=$('vpop');p.classList.remove('on','song');p.innerHTML='';document.querySelectorAll('#vlots .lt.open').forEach(x=>x.classList.remove('open'))}
-function showV(n,el){closeVP();el.classList.add('open');vcur=n;const p=$('vpop'),im=su(n.img);p.innerHTML='<div class="meta"><span>'+esc(n.m||'')+'</span><span>'+dt(n.d)+'</span></div>'+(im?'<img class="big" src="'+im+'" alt="">':'')+(n.song?songEl(n.song,true):'')+'<p>'+esc(n.x)+'</p><div class="acts"><button class="chip vpl">นำไปปลูกต่อในบ่อฉัน</button></div>';p.classList.add('on');p.classList.toggle('song',!!n.song)}
-$('vpop').onclick=e=>{if(e.target.closest('.vpl')){e.stopPropagation();plant(vcur,V.name);$('vtoast').textContent='ปลูกลงบ่อของคุณแล้ว';return}if(!e.target.closest('.mp'))closeVP()};
+function showV(n,el){closeVP();el.classList.add('open');vcur=n;const p=$('vpop'),im=su(n.img);p.innerHTML='<div class="meta"><span>'+esc(n.m||'')+'</span><span>'+dt(n.d)+'</span></div>'+(im?'<img class="big" src="'+im+'" alt="">':'')+(n.song?songEl(n.song,true):'')+'<p>'+esc(n.x)+'</p><div class="acts">'+rbtn(n,'vpl',V.notes.indexOf(n))+'</div>';p.classList.add('on');p.classList.toggle('song',!!n.song)}
+$('vpop').onclick=e=>{const bt=e.target.closest('.vpl');if(bt){e.stopPropagation();askPlant(vcur,bt);return}if(!e.target.closest('.mp'))closeVP()};
 function openV(d){V=d;const dn=d.notes||[],bg=su(d.bg),lo=su(d.lotus);vp=$('vpond');vp.className='pond'+(bg?' cb':'');vp.style.backgroundImage=bg?'url("'+bg+'")':'';vp.dataset.s=SEAK;
-$('vnm').textContent=d.name;$('vav').src=su(d.avatar)||BLANK;$('vcnt').textContent='รหัสบ่อ '+d.code+' · '+dn.length+' ข้อความที่เปิดให้เยี่ยมชม';$('vtoast').textContent='';
+$('vnm').textContent=pname(d.pond_name,d.code);$('vav').src=su(d.avatar)||su(d.lotus)||LOTUS_ICO;$('vcnt').textContent=(d.friend==='friend'&&d.name?'เจ้าของบ่อ: '+d.name+' · ':'')+dn.length+' ข้อความที่เปิดให้เยี่ยมชม';setFr();$('vtoast').textContent='';
 vdeco();const box=$('vlots');box.innerHTML='';closeVP();
 dn.slice(0,14).forEach(n=>{const el=document.createElement('button'),im=su(n.img);el.className='lt';el.style.left=(8+(((n.id%9973)*.61803)%1)*80)+'%';el.style.top=(24+(((n.id%7919)*.38197)%1)*46)+'%';el.setAttribute('aria-label','เปิดข้อความ');el.innerHTML=im?'<img class="pol" src="'+im+'" alt="">':lo?'<img class="pol cu" src="'+lo+'" alt="">':lotusSVG;el.dataset.k=n.t;el.insertAdjacentHTML('beforeend','<b class="bd">'+esc(n.m||'')+'</b>');el.onclick=()=>showV(n,el);box.appendChild(el)});
 $('vempty').style.display=dn.length?'none':'block';
-$('vlist').innerHTML=dn.map((n,i)=>'<div class="card note"><div class="meta"><span>'+esc(n.m||'')+'</span><span>'+dt(n.d)+'</span></div>'+(su(n.img)?'<img class="big" src="'+su(n.img)+'" alt="">':'')+'<p>'+esc(n.x)+'</p><div class="acts"><button class="chip vpl2" data-i="'+i+'">นำไปปลูกต่อในบ่อฉัน</button></div></div>').join('');
+$('vlist').innerHTML=dn.map((n,i)=>'<div class="card note"><div class="meta"><span>'+esc(n.m||'')+'</span><span>'+dt(n.d)+'</span></div>'+(su(n.img)?'<img class="big" src="'+su(n.img)+'" alt="">':'')+'<p>'+esc(n.x)+'</p><div class="acts">'+rbtn(n,'vpl2',i)+'</div></div>').join('');
 $('vm').classList.add('on');document.body.style.overflow='hidden'}
 function closeV(){$('vm').classList.remove('on');$('vpop').innerHTML='';document.body.style.overflow=''}
-$('vx').onclick=closeV;document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('lc').classList.contains('on'))closeC();else if($('vm').classList.contains('on'))closeV()});
-$('vlist').addEventListener('click',e=>{const b=e.target.closest('.vpl2');if(!b)return;plant(V.notes[+b.dataset.i],V.name);b.textContent='ปลูกแล้ว';$('vtoast').textContent='ปลูกลงบ่อของคุณแล้ว'});
+$('vx').onclick=closeV;document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('pm').classList.contains('on'))closePM();else if($('bm').classList.contains('on'))closeBM();else if($('lc').classList.contains('on'))closeC();else if($('vm').classList.contains('on'))closeV()});
+$('vlist').addEventListener('click',e=>{const b=e.target.closest('.vpl2');if(!b)return;askPlant(V.notes[+b.dataset.i],b)});
 async function visit(c){c=(c||'').trim().toUpperCase();if(!c)return vmsg('ใส่รหัสบ่อก่อนนะ');if(!me){$('lm').classList.add('on');return}vmsg('กำลังเดินไปที่บ่อ…');const{data,error}=await sb.rpc('visit_pond',{p_code:c});if(error)return vmsg(error.message);vmsg('');openV(data)}
 async function rnd(){if(!me){$('lm').classList.add('on');return}vmsg('กำลังสุ่มบ่อ…');const{data,error}=await sb.rpc('random_pond');if(error)return vmsg(error.message);if(!data)return vmsg('ตอนนี้ยังไม่มีบ่อที่เปิดให้เยี่ยมชม');visit(data)}
 $('vrand').onclick=$('vnext').onclick=rnd;
 let ponds=[];
-function rl(){const q=($('vq').value||'').trim().toLowerCase(),l=ponds.filter(p=>!q||String(p.name).toLowerCase().includes(q));$('pl').innerHTML=l.length?l.map(p=>'<button class="pc" data-c="'+esc(p.code)+'"><img src="'+(su(p.avatar)||BLANK)+'" alt=""><b>'+esc(p.name)+'</b><span class="sub">'+(p.cnt?p.cnt+' ข้อความ':'ยังไม่มีข้อความ')+'</span></button>').join(''):'<p class="sub">'+(q?'ไม่พบบ่อชื่อนี้':'ยังไม่มีบ่ออื่นที่เปิดให้เยี่ยมชม')+'</p>'}
+function rl(){const q=($('vq').value||'').trim().toLowerCase(),l=ponds.filter(p=>!q||pname(p.pond_name,p.code).toLowerCase().includes(q)||String(p.name||'').toLowerCase().includes(q));
+$('pl').innerHTML=l.length?l.map(p=>'<button class="pc" data-c="'+esc(p.code)+'">'+(su(p.lotus)?'<img src="'+su(p.lotus)+'" alt="">':'<i class="pcl">🪷</i>')+'<b>'+esc(pname(p.pond_name,p.code))+'</b>'+(p.fstatus==='friend'&&p.name?'<span class="sub pcn">🤝 '+esc(p.name)+'</span>':'')+'<span class="sub">'+(p.cnt?p.cnt+' ข้อความ':'ยังไม่มีข้อความ')+'</span></button>').join(''):'<p class="sub">'+(q?'ไม่พบบ่อชื่อนี้':'ยังไม่มีบ่ออื่นที่เปิดให้เยี่ยมชม')+'</p>'}
 async function loadL(){if(!sb||!me){$('pl').innerHTML='';return}const{data,error}=await sb.rpc('list_ponds');if(error){$('pl').innerHTML='<p class="sub">ยังใช้ไม่ได้: รันไฟล์ schema.sql ใหม่ใน Supabase ก่อน ('+esc(error.message)+')</p>';return}ponds=data||[];rl()}
 $('vq').oninput=rl;
 $('pl').addEventListener('click',e=>{const b=e.target.closest('.pc');if(b)visit(b.dataset.c)});$('vref').onclick=loadL;
 $('vc').addEventListener('click',e=>{const b=e.target.closest('#cpc');if(!b||!code)return;const u=location.origin+location.pathname+'?pond='+code;navigator.clipboard&&navigator.clipboard.writeText(u);b.textContent='คัดลอกลิงก์แล้ว'});
+/* ---- v4: ชื่อบ่อ · เพื่อน · ขออนุญาตปลูกต่อ · กล่องจดหมาย ---- */
+const PN=['บ่อน้ำค้าง','บ่อจันทร์เพ็ญ','บ่อหมอกบาง','บ่อลมเย็น','บ่อดาวตก','บ่อเมฆขาว','บ่อสายฝน','บ่อแสงทอง'];
+const pname=(n,k)=>n&&String(n).trim()?n:PN[Math.abs([...String(k||'')].reduce((a,c)=>(a*31+c.charCodeAt(0))|0,7))%PN.length];
+const LOTUS_ICO='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect width="24" height="24" fill="#fbe0ea"/><path d="M12 4c3.2 3 3.6 8.2 0 13-3.6-4.8-3.2-10 0-13z" fill="#f1a9c3"/><path d="M4 18.5c4 .5 6.5-.8 8-2.5 1.5 1.7 4 3 8 2.5-3 3.5-13 3.5-16 0z" fill="#6e9a4b"/></svg>');
+let ttm;function tt(t){const e=$('tt');e.textContent=t;e.classList.add('on');clearTimeout(ttm);ttm=setTimeout(()=>e.classList.remove('on'),3800)}
+/* โปรไฟล์ (เปิดจากมุมขวาบน) */
+function pvw(){const v=$('pmv');if(!v)return;const bg=su(PF.pond_bg),lo=su(PF.lotus_img);v.style.backgroundImage=bg?'url("'+bg+'")':'';$('pmvl').innerHTML=lo?'<img src="'+lo+'" alt="">':'🪷';$('pmvn').textContent=PF.pond_name||'ยังไม่ตั้งชื่อบ่อ';$('pmvs').textContent=PF.pond_public===false?'ปิดการเยี่ยมชม':'เปิดให้เยี่ยมชม'}
+function openPM(){if(!me){$('lm').classList.add('on');return}pfm('');$('pm').classList.add('on');document.body.style.overflow='hidden';pvw()}
+function closePM(){$('pm').classList.remove('on');document.body.style.overflow=''}
+$('pmx').onclick=closePM;$('pm').addEventListener('click',e=>{if(e.target===$('pm'))closePM()});
+$('pfpn').oninput=()=>{$('pmvn').textContent=$('pfpn').value.trim()||'ยังไม่ตั้งชื่อบ่อ'};
+/* สถานะเพื่อน / กล่องจดหมาย */
+let S=null,claiming=false;
+async function loadS(){if(!sb||!me)return;const{data,error}=await sb.rpc('social');if(error||!data)return;S=data;
+const n=(S.friend_in||[]).length+(S.plant_in||[]).length,b=$('bdg');if(b){b.hidden=!n;b.textContent=n}
+if($('bm').classList.contains('on'))renderBell();
+if(!claiming&&(S.plant_ok||[]).length){claiming=true;try{for(const r of S.plant_ok){const{data:d,error:e}=await sb.rpc('claim_plant',{p_id:r.id});if(!e&&d&&d[0]){plant(d[0],pname(d[0].pond_name,r.id),true);tt('🌱 '+pname(d[0].pond_name,r.id)+' อนุญาตแล้ว ดอกบัวถูกปลูกลงบ่อของคุณ')}else if(!e)tt('ข้อความนั้นไม่เปิดให้เห็นแล้ว ปลูกต่อไม่ได้')}}finally{claiming=false}}}
+setInterval(()=>{if(me&&!document.hidden)loadS()},60000);document.addEventListener('visibilitychange',()=>{if(!document.hidden&&me)loadS()});
+function renderBell(){const b=$('bmb');if(!S){b.innerHTML='<p class="sub">กำลังโหลด…</p>';return}
+const fi=S.friend_in||[],pi=S.plant_in||[],fr=S.friends||[];let h='';
+if(fi.length)h+='<p class="sub bh">คำขอเป็นเพื่อน</p>'+fi.map(r=>'<div class="bi"><span>🤝 <b>'+esc(pname(r.pond_name,r.code))+'</b> อยากเป็นเพื่อนกับคุณ</span><span class="bj"><button class="chip" data-a="fy" data-id="'+r.id+'">รับ</button><button class="chip" data-a="fn" data-id="'+r.id+'">ไม่รับ</button></span></div>').join('');
+if(pi.length)h+='<p class="sub bh">ขออนุญาตนำดอกบัวไปปลูกต่อ</p>'+pi.map(r=>'<div class="bi"><span><b>'+esc(pname(r.pond_name,r.code))+(r.name?' ('+esc(r.name)+')':'')+'</b> ขอนำ “'+esc((r.x||'(รูปภาพ)').slice(0,60))+'” ไปปลูกในบ่อของเขา</span><span class="bj"><button class="chip" data-a="py" data-id="'+r.id+'">อนุญาต</button><button class="chip" data-a="pn" data-id="'+r.id+'">ไม่อนุญาต</button></span></div>').join('');
+h+='<p class="sub bh">เพื่อนของฉัน</p>'+(fr.length?fr.map(r=>'<div class="bi"><span class="bf2"><img src="'+(su(r.avatar)||su(r.lotus)||LOTUS_ICO)+'" alt=""><span><b>'+esc(r.name||'(ยังไม่ตั้งชื่อ)')+'</b><br><small class="sub">'+esc(pname(r.pond_name,r.code))+'</small></span></span><span class="bj"><button class="chip" data-a="v" data-c="'+esc(r.code)+'">เยี่ยมบ่อ</button><button class="chip" data-a="uf" data-c="'+esc(r.code)+'">เลิกเป็นเพื่อน</button></span></div>').join(''):'<p class="sub">ยังไม่มีเพื่อน · เปิดบ่อของใครสักคนแล้วกด “ขอเป็นเพื่อน” ได้เลย</p>');
+b.innerHTML=h}
+function openBell(){if(!me){$('lm').classList.add('on');return}$('bm').classList.add('on');document.body.style.overflow='hidden';renderBell();loadS()}
+function closeBM(){$('bm').classList.remove('on');document.body.style.overflow=''}
+$('bmx').onclick=closeBM;$('bm').addEventListener('click',e=>{if(e.target===$('bm'))closeBM()});
+$('bmb').addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a,id=+b.dataset.id;
+if(a==='v'){closeBM();visit(b.dataset.c);return}
+if(a==='uf'){if(!confirm('เลิกเป็นเพื่อนกัน? ชื่อของกันและกันจะถูกซ่อนอีกครั้ง'))return;b.disabled=true;const r=await sb.rpc('unfriend',{p_code:b.dataset.c});if(r.error){tt(r.error.message);b.disabled=false;return}tt('เลิกเป็นเพื่อนแล้ว');loadS();loadL();return}
+b.disabled=true;const r=(a==='fy'||a==='fn')?await sb.rpc('friend_respond',{p_id:id,p_accept:a==='fy'}):await sb.rpc('plant_respond',{p_id:id,p_accept:a==='py'});
+if(r.error){tt(r.error.message);b.disabled=false;return}
+tt(a==='fy'?'เป็นเพื่อนกันแล้ว 🤝':a==='py'?'อนุญาตแล้ว ดอกบัวจะไปอยู่ในบ่อของเขา 🌱':'ปฏิเสธแล้ว');loadS();loadL()});
+/* ขอเป็นเพื่อน (ในหน้าเยี่ยมบ่อ) */
+function setFr(){const b=$('vfr'),s=V&&V.friend;b.style.display=!s||s==='self'?'none':'';b.disabled=s==='sent'||s==='friend';b.textContent=({none:'🤝 ขอเป็นเพื่อน',sent:'⏳ ส่งคำขอแล้ว',incoming:'🤝 ตอบรับเป็นเพื่อน',friend:'🤝 เป็นเพื่อนกัน'})[s]||''}
+$('vfr').onclick=async()=>{if(!V||$('vfr').disabled)return;$('vfr').disabled=true;const{data,error}=await sb.rpc('friend_request',{p_code:V.code});if(error){tt(error.message);$('vfr').disabled=false;return}
+if(data==='friend'){const r=await sb.rpc('visit_pond',{p_code:V.code});if(!r.error)openV(r.data);tt('เป็นเพื่อนกันแล้ว 🤝 ตอนนี้เห็นชื่อของกันและกันแล้ว')}else{V.friend='sent';setFr();tt('ส่งคำขอเป็นเพื่อนแล้ว 💌')}loadS();loadL()};
+/* ขออนุญาตนำดอกบัวของเจ้าของบ่อไปปลูกต่อ */
+const RQ={pending:'⏳ รอเจ้าของอนุญาต',approved:'✅ ได้รับอนุญาตแล้ว',done:'🌱 ปลูกในบ่อของฉันแล้ว',declined:'เจ้าของไม่อนุญาต'};
+const rbtn=(n,c,i)=>'<button class="chip '+c+'" data-i="'+i+'"'+(RQ[n.req]?' disabled':'')+'>'+(RQ[n.req]||'🙏 ขออนุญาตนำไปปลูกต่อ')+'</button>';
+function syncReq(n){const i=V.notes.indexOf(n);document.querySelectorAll('#vpop .vpl,#vlist .vpl2').forEach(b=>{if(+b.dataset.i===i){b.disabled=!!RQ[n.req];b.textContent=RQ[n.req]||'🙏 ขออนุญาตนำไปปลูกต่อ'}})}
+async function askPlant(n,b){if(!n||b.disabled)return;b.disabled=true;b.textContent='กำลังส่งคำขอ…';const{error}=await sb.rpc('request_plant',{p_code:V.code,p_note_id:n.id});
+if(error){$('vtoast').textContent=error.message;syncReq(n);return}
+n.req='pending';syncReq(n);$('vtoast').textContent='ส่งคำขอแล้ว 🙏 เมื่อเจ้าของบ่ออนุญาต ดอกบัวจะถูกปลูกลงบ่อของคุณเอง'}
 /* ---- แอนิเมชันบน PC: บ่อขยับตามเมาส์ + ระลอกน้ำตามเคอร์เซอร์ ---- */
 (function(){const pw=$('pondwrap');let lr=0;pw.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse'||CALM())return;const r=pw.getBoundingClientRect();pw.style.setProperty('--mx',((e.clientX-r.left)/r.width-.5)*2);pw.style.setProperty('--my',((e.clientY-r.top)/r.height-.5)*2);const t=Date.now();if(t-lr>220&&!e.target.closest('.lt,.pop')){lr=t;const i=document.createElement('i');i.className='tap';i.style.left=(e.clientX-r.left)+'px';i.style.top=(e.clientY-r.top)+'px';pw.appendChild(i);setTimeout(()=>i.remove(),1800)}});pw.addEventListener('pointerleave',()=>{pw.style.setProperty('--mx',0);pw.style.setProperty('--my',0)})})();
 /* ---- เริ่มต้น / ล็อกอิน ---- */
-async function loadAll(){await loadP();await loadF();loadL();if(pend&&me){const c=pend;pend=null;try{sessionStorage.removeItem('lotus-pond')}catch(e){}visit(c)}}
+async function loadAll(){await loadP();await loadF();loadL();loadS();if(pend&&me){const c=pend;pend=null;try{sessionStorage.removeItem('lotus-pond')}catch(e){}visit(c)}}
 if(sb)sb.auth.onAuthStateChange(()=>setTimeout(()=>{if(me)loadAll();else{PF={};code=null;try{localStorage.removeItem('lotus-pf')}catch(e){}applyPF();loadF()}},700));
 applyPF();setTimeout(()=>{if(me)loadAll();else{loadF();if(pend)$('lm').classList.add('on')}},1600);
 })();
