@@ -153,6 +153,44 @@ input[type=time],select{font:inherit;background:transparent;color:var(--ink);bor
 #song:focus{border-color:var(--pink)}
 .or{text-align:center;color:var(--soft);font-size:.8rem;margin:12px 0 6px}
 #lm input{width:100%;padding:11px;border-radius:14px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+
+/* ---- v2: บ่อกว้าง · ลอยดอกบัว · การ์ดเปิด ---- */
+body{overflow-x:hidden}
+.pond{height:540px;width:min(calc(100vw - 24px),980px);margin-left:calc(50% - min(50vw - 12px,490px));background-size:cover;background-position:center}
+.mp{display:flex;align-items:center;gap:12px;margin:10px 0;padding:8px 12px;border-radius:999px;background:#0000001c}
+.mpf{position:fixed;left:-9999px;width:220px;height:220px;border:0}
+.vin{flex:none;width:48px;height:48px;border-radius:50%;background:#222 center/cover;border:3px solid #151515;box-shadow:inset 0 0 0 9px #0005,0 3px 10px #0004;animation:spin 6s linear infinite}
+.mp.off .vin{animation-play-state:paused}
+@keyframes spin{to{transform:rotate(360deg)}}
+.mp .sub{flex:1;color:inherit;opacity:.75}
+.mpb{border:0;border-radius:50%;width:36px;height:36px;background:var(--pink);color:#fff;cursor:pointer}
+#fcode,#fsong,#fl textarea{width:100%;margin:8px 0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+#fl textarea{border-style:dashed;border-color:var(--pink)}
+.code{letter-spacing:.18em;font-weight:400;color:var(--leaf)}
+.sail{position:absolute;z-index:6;left:46%;bottom:14px;width:64px;pointer-events:none;filter:drop-shadow(0 0 14px #fff8);animation:sail 4.6s ease-in forwards}
+@keyframes sail{to{transform:translate(170px,-300px) rotate(24deg) scale(.35);opacity:0}}
+#lc{display:none;position:fixed;inset:0;z-index:80;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px;overflow:hidden;background:radial-gradient(circle at 50% 28%,var(--bgA),var(--bgB))}
+#lc.on{display:flex;animation:in .5s ease}
+#lc.s-pink{--bgA:#ffe9f1;--bgB:#f2a9c6;--cbg:linear-gradient(160deg,#fff,#ffeef4);--cink:#5a4350;--c:#f1a9c3}
+#lc.s-night{--bgA:#3d3068;--bgB:#120e26;--cbg:linear-gradient(160deg,#35295f,#1b1637);--cink:#efe6ff;--c:#c9b8ff}
+#lc.s-gold{--bgA:#fff4d9;--bgB:#e3b869;--cbg:linear-gradient(160deg,#fffdf5,#fbefd2);--cink:#5b4720;--c:#e0b350}
+#lcr{position:absolute;inset:0;pointer-events:none}
+.fp{position:absolute;top:-24px;width:12px;height:16px;border-radius:60% 0;background:var(--c);opacity:.85;animation:fpf linear infinite}
+.s-night .fp{width:5px;height:5px;border-radius:50%;box-shadow:0 0 10px 3px var(--c);animation-name:tw2}
+@keyframes fpf{to{transform:translate(var(--sx),108vh) rotate(560deg)}}
+@keyframes tw2{0%,100%{transform:translateY(var(--ty));opacity:.15}50%{transform:translateY(calc(var(--ty) - 22px));opacity:1}}
+.lcf{position:relative;overflow:hidden;width:min(92vw,380px);padding:30px 26px 22px;border-radius:28px;text-align:center;background:var(--cbg);color:var(--cink);box-shadow:0 30px 70px -24px var(--c),0 0 0 1px #fff6 inset;animation:unfold 1.1s cubic-bezier(.2,1.1,.4,1) both}
+.s-gold .lcf{outline:1px solid #d9b45f;outline-offset:-9px}
+.lcf::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#fff9 50%,transparent 65%);transform:translateX(-130%);animation:shine 2.2s .9s ease-in-out forwards;pointer-events:none}
+@keyframes unfold{from{transform:perspective(900px) rotateX(-85deg) scale(.6);opacity:0}60%{transform:perspective(900px) rotateX(9deg)}}
+@keyframes shine{to{transform:translateX(130%)}}
+.lcs svg{width:76px;height:76px;filter:drop-shadow(0 6px 16px var(--c));animation:bloom 1.4s .5s both cubic-bezier(.2,1.4,.4,1)}
+@keyframes bloom{from{transform:scale(.2) rotate(-40deg);opacity:0}}
+.lcw{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.15rem;margin:4px 0 12px;opacity:.8}
+.lcf p{margin:0;white-space:pre-wrap;word-break:break-word;line-height:1.85;font-size:1.02rem;animation:in 1s 1.2s both}
+.lcm{margin-top:12px;font-size:1.3rem}
+.lcf .mp{background:#00000014}
+@media (prefers-reduced-motion:reduce){.fp,.lcf,.lcf::after,.lcs svg,.vin{animation:none!important}}
 </style>
 </head>
 <body>
@@ -230,6 +268,14 @@ input[type=time],select{font:inherit;background:transparent;color:var(--ink);bor
 </div>
 
 <div class="pond" id="pondwrap"><div id="lots"></div><div class="hint" id="phint">บ่อยังว่างอยู่… เขียนโน้ตแรก แล้วดอกบัวจะผุดขึ้นมา 🪷</div><div class="pop" id="pop"></div></div>
+<div class="card" id="fl" style="margin-top:22px"><p class="prompt">ลอยดอกบัวให้ใครสักคน</p>
+<div class="tabs" style="margin:0 0 6px;justify-content:flex-start"><button class="chip on" data-fm="pool">ลอยให้คนไม่รู้จัก</button><button class="chip" data-fm="crush">ส่งถึงคนที่แอบชอบ</button></div>
+<input id="fcode" placeholder="รหัสของเขา (6 ตัว ขอได้จากเจ้าตัว)" maxlength="8" autocomplete="off" hidden>
+<textarea id="fx" maxlength="500" placeholder="เขียนถึงใครสักคน… เขาจะไม่รู้ว่าใครเขียน"></textarea>
+<input id="fsong" type="url" inputmode="url" placeholder="ลิงก์เพลง YouTube (เล่นให้ทันทีที่เขาเปิดการ์ด)" autocomplete="off">
+<div class="row" id="fsty" style="justify-content:flex-start"><span class="sub">การ์ด</span><button class="chip on" data-st="pink">ซากุระ</button><button class="chip" data-st="night">ราตรีดาว</button><button class="chip" data-st="gold">จดหมายทอง</button></div>
+<div class="row"><span class="sub" id="fmsg"></span><span><button class="save" id="fcatch" style="background:var(--pink)">จับดอกบัวที่ลอยมา</button> <button class="save" id="fsend">ลอยออกไป</button></span></div>
+<div class="sub" id="fmine" style="margin-top:10px"></div><div id="fin" style="margin-top:8px"></div></div>
 <details class="card" style="margin-top:22px"><summary style="cursor:pointer">☁️ ย้ายโน้ตไปเครื่องอื่น (สำรอง / นำเข้า)</summary><p class="sub" style="margin:10px 0">กด “คัดลอกโค้ด” ในเครื่องเดิม แล้วนำไปวางในกล่องนี้บนเครื่องใหม่ แล้วกด “นำเข้า” (ไม่ต้องล็อกอิน)</p><textarea id="bk" style="min-height:70px" placeholder="วางโค้ดสำรองที่นี่…"></textarea><div class="row"><span class="sub" id="bkmsg"></span><span><button class="save" id="exp" style="background:var(--pink)">คัดลอกโค้ด</button> <button class="save" id="imp">นำเข้า</button></span></div></details>
 <div id="sleepchart"></div>
 <h2>โน้ตของฉัน <button class="chip" id="wk" style="margin-left:8px">🖼️ การ์ดสัปดาห์นี้</button></h2>
@@ -238,9 +284,11 @@ input[type=time],select{font:inherit;background:transparent;color:var(--ink);bor
 </main>
 
 <div id="vo"><div class="card"><p class="prompt">ระบายออกมาเลย ไม่มีใครเห็น ไม่ต้องเรียบเรียง…</p><textarea id="vt" style="min-height:200px"></textarea><div class="row"><button class="chip" id="vclose">ปิด</button><span><button class="save" id="vfly" style="background:var(--pink)">🫧 ปล่อยให้ลอยไป</button> <button class="save" id="vkeep">เก็บเป็นโน้ต</button></span></div></div></div>
+<div id="lc" role="dialog" aria-label="ดอกบัวที่ลอยมา"><div id="lcr"></div><div id="lcb"></div><button class="chip" id="lcx">ปิดการ์ด</button></div>
 <div id="br" role="dialog" aria-label="หายใจ"><div class="orb"><svg viewBox="0 0 24 24"><use href="#i-lotus"/></svg></div><div class="bt"></div><div class="sub bc"></div><div class="sub">เข้า 4 · กลั้น 7 · ออก 8</div><button class="chip" id="bx">ปิด</button></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+const ICON_DIR='',POND_PHOTO='';/* ICON_DIR='icons/' = ใช้ไฟล์ icons/<ชื่อ>.png แทนไอคอน SVG · POND_PHOTO='pond.jpg' = รูปจริงเป็นพื้นบ่อ */
 const SUPABASE_URL='https://elhoersopfxazhijuowv.supabase.co',SUPABASE_ANON_KEY='sb_publishable_etOKwXCrF2tQUEVQUKUtmA_RIGF_tRo';
 const T={morning:{n:'เช้า',e:'🌅',p:'วันนี้ฉันขอบคุณเรื่อง… / ตั้งใจจะทำ…'},night:{n:'ก่อนนอน',e:'🌙',p:'วันนี้เป็นยังไงบ้าง ปล่อยวางอะไรได้บ้าง…'},free:{n:'ทั่วไป',e:'🪷',p:'มีอะไรอยู่ในใจ…'},sleep:{n:'นอน',e:'😴',p:'เมื่อคืนนอนเป็นยังไง ระบายได้เลย…'},dream:{n:'ฝัน',e:'🌌',p:'เมื่อคืนฝันเห็นอะไร จำได้แค่ไหนก็เขียนเลย…'}};
 const Q={dream:['เมื่อคืนฝันเห็นอะไร จำได้แค่ไหนก็เขียนเลย…','ในฝันรู้สึกยังไง ใครอยู่ตรงนั้นบ้าง…'],morning:['วันนี้ร่างกายรู้สึกยังไงบ้าง…','มีเรื่องเล็กๆ อะไรที่ขอบคุณตอนนี้…','อยากให้วันนี้เป็นวันแบบไหน…'],night:['เรื่องไหนที่ยังค้างอยู่ในหัว…','วันนี้ใจดีกับตัวเองไปบ้างไหม…','ปล่อยอะไรไปได้บ้างก่อนนอน…'],free:['มีอะไรอยู่ในใจ…','ตอนนี้ต้องการอะไรมากที่สุด…','ขอบคุณตัวเองเรื่องอะไรดี…']};
@@ -297,7 +345,7 @@ if(m=u.match(/^https?:\/\/(?:www\.|m\.|music\.)?(?:youtube\.com\/(?:watch\?(?:[^
 if(m=u.match(/^https?:\/\/open\.spotify\.com\/(?:intl-[a-z]+\/)?((?:track|album|playlist|episode|show|artist)\/[A-Za-z0-9]{10,30})/))return{k:'sp',p:m[1],n:'Spotify'};
 return null}
 function songEl(u,auto){const s=songInfo(u);if(!s)return'';
-return s.k==='yt'?'<iframe class="sg" src="https://www.youtube-nocookie.com/embed/'+s.id+'?autoplay='+(auto?1:0)+'&playsinline=1&rel=0'+(s.t?'&start='+s.t:'')+'" allow="autoplay; encrypted-media" allowfullscreen title="เพลง"></iframe>':'<iframe class="sg sp" src="https://open.spotify.com/embed/'+s.p+'" allow="autoplay; encrypted-media; clipboard-write" title="เพลง"></iframe>'}
+return s.k==='yt'?'<div class="mp'+(auto?'':' off')+'"><iframe class="mpf" src="https://www.youtube-nocookie.com/embed/'+s.id+'?autoplay='+(auto?1:0)+'&playsinline=1&rel=0&enablejsapi=1&loop=1&playlist='+s.id+(s.t?'&start='+s.t:'')+'" allow="autoplay; encrypted-media" title="เพลง"></iframe><i class="vin" style="background-image:url(https://i.ytimg.com/vi/'+s.id+'/mqdefault.jpg)"></i><span class="sub">เพลงของโน้ตนี้</span><button class="mpb" type="button" aria-label="เล่น/หยุด">'+(auto?'❚❚':'▶')+'</button></div>':'<iframe class="sg sp" src="https://open.spotify.com/embed/'+s.p+'" allow="autoplay; encrypted-media; clipboard-write" title="เพลง"></iframe>'}
 function closePop(){const p=$('pop');p.classList.remove('on','song');p.innerHTML='';document.querySelectorAll('.lt.open').forEach(x=>x.classList.remove('open'))}
 $('pop').onclick=closePop;
 function show(n,el){closePop();el.classList.add('open');const p=$('pop');
@@ -382,7 +430,7 @@ load();setTab(h>=19||h<4?'night':h<11?'morning':'free');render();
 initAuth();
 const EM={'🌸':'lotus','🪷':'lotus','🍃':'leaf','☁️':'cloud','☁':'cloud','☀️':'sun','☀':'sun','🌧️':'rain','🌧':'rain','🎀':'ribbon','🫧':'bubble','🍵':'tea','🧸':'bear','🌙':'moon','🌅':'sunrise','😴':'sleep','⭐':'star','☕':'coffee','😰':'stress','📱':'phone','🏃':'run','🍷':'wine','🍜':'noodle','📷':'camera','🔒':'lock','📌':'pin','📍':'pinoff','🖼️':'image','🖼':'image','💭':'thought','🐟':'fish','✿':'flower','🌌':'dream','🎮':'discord'};
 const RE=new RegExp(Object.keys(EM).sort((a,b)=>b.length-a.length).join('|'),'g'),SKIP='textarea,script,style,option,input,svg,.pin,.ft,p:not(.sub)';
-function fix(t){const p=t.parentElement;if(!p||p.closest(SKIP))return;const v=t.nodeValue;RE.lastIndex=0;if(!RE.test(v))return;RE.lastIndex=0;const f=document.createDocumentFragment();let i=0,m;while((m=RE.exec(v))){f.append(v.slice(i,m.index));const e=document.createElementNS('http://www.w3.org/2000/svg','svg');e.setAttribute('class','ic');e.innerHTML='<use href="#i-'+EM[m[0]]+'"/>';f.append(e);i=m.index+m[0].length}f.append(v.slice(i));t.replaceWith(f)}
+function fix(t){const p=t.parentElement;if(!p||p.closest(SKIP))return;const v=t.nodeValue;RE.lastIndex=0;if(!RE.test(v))return;RE.lastIndex=0;const f=document.createDocumentFragment();let i=0,m;while((m=RE.exec(v))){f.append(v.slice(i,m.index));const e=document.createElementNS('http://www.w3.org/2000/svg','svg');e.setAttribute('class','ic');e.innerHTML='<use href="#i-'+EM[m[0]]+'"/>';if(ICON_DIR){const im=new Image();im.className='ic';im.alt='';im.src=ICON_DIR+EM[m[0]]+'.png';im.onerror=()=>im.replaceWith(e);f.append(im)}else f.append(e);i=m.index+m[0].length}f.append(v.slice(i));t.replaceWith(f)}
 function iconify(n){if(n.nodeType===3)return fix(n);if(n.nodeType!==1)return;const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT),a=[];while(w.nextNode())a.push(w.currentNode);a.forEach(fix)}
 const HEX={'var(--pink)':'#f1a9c3','var(--green)':'#c5dd8c','var(--leaf)':'#6e9a4b'};
 function iconImg(k){return new Promise(r=>{let b=document.getElementById('i-'+k).innerHTML;for(const q in HEX)b=b.split(q).join(HEX[q]);const im=new Image();im.onload=()=>r(im);im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'+b+'</svg>')})}
@@ -456,6 +504,37 @@ $('breath').onclick=()=>{bi=0;cy=0;orb.style.transitionDuration='0s';orb.style.t
 $('bx').onclick=brClose;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&br.classList.contains('on'))brClose()});
 })();
 $('imp').onclick=()=>{try{const a=JSON.parse($('bk').value);if(!Array.isArray(a))throw 0;const have=new Set(notes.map(n=>n.id));let c=0;a.forEach(n=>{if(n&&n.id&&n.x&&T[n.t]&&!have.has(n.id)){notes.push(Object.assign({},n,{x:String(n.x),d:+n.d||Date.now()}));c++}});notes.sort((a,b)=>b.d-a.d);store();render();$('bkmsg').textContent='นำเข้าใหม่ '+c+' โน้ต'}catch(e){$('bkmsg').textContent='โค้ดไม่ถูกต้อง'}};
+/* ===== v2: ลอยดอกบัว / จับดอกบัว / การ์ด / เพลงเล่นทันที ===== */
+(function(){
+if(POND_PHOTO)$('pondwrap').style.backgroundImage='linear-gradient(#0000,#0003),url('+POND_PHOTO+')';
+let fm='pool',st='pink',inb=[];const R=(a,b)=>a+Math.random()*(b-a),msg=t=>{$('fmsg').textContent=t};
+document.addEventListener('click',e=>{const b=e.target.closest('.mpb');if(!b)return;e.stopPropagation();const m=b.parentElement,off=m.classList.toggle('off');m.querySelector('iframe').contentWindow.postMessage(JSON.stringify({event:'command',func:off?'pauseVideo':'playVideo',args:[]}),'*');b.textContent=off?'▶':'❚❚'},true);
+function rain(){const r=$('lcr');r.innerHTML='';if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<26;i++){const p=document.createElement('i');p.className='fp';p.style.cssText='left:'+R(0,100)+'%;--sx:'+R(-90,90)+'px;--ty:'+R(5,90)+'vh;top:'+(st==='night'?R(2,95)+'%':'-24px')+';animation-duration:'+R(st==='night'?3:6,st==='night'?6:11)+'s;animation-delay:'+(-R(0,9))+'s';if(i%3==0&&st!=='night')p.style.background='var(--green)';r.appendChild(p)}}
+function card(f,who){st=f.style||'pink';const o=$('lc');o.className='on s-'+st;
+$('lcb').innerHTML='<div class="lcf"><div class="lcs"><svg viewBox="0 0 24 24"><use href="#i-lotus"/></svg></div><div class="lcw">'+who+'</div>'+(f.song?songEl(f.song,true):'')+'<p>'+esc(f.x)+'</p><div class="lcm">'+esc(f.m||'')+'</div></div>';rain()}
+function closeC(){$('lc').className='';$('lcb').innerHTML='';$('lcr').innerHTML=''}
+$('lcx').onclick=closeC;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeC()});
+async function loadF(){const a=$('fin'),c=$('fmine');if(!sb||!me){c.textContent='';a.innerHTML='<p class="sub">เข้าสู่ระบบเพื่อส่งและรับดอกบัว</p>';return}
+const[k,i]=await Promise.all([sb.rpc('my_code'),sb.rpc('inbox')]);
+if(k.error||i.error){a.innerHTML='<p class="sub">ยังใช้ไม่ได้: รันไฟล์ schema.sql ใหม่ใน Supabase ก่อน</p>';return}
+c.innerHTML='รหัสของฉัน <b class="code">'+k.data+'</b> · คนที่ชอบเราส่งถึงเราแบบไม่เปิดเผยตัวได้ <button class="chip" id="cpc">คัดลอก</button>';
+inb=i.data||[];a.innerHTML=inb.length?inb.map((f,j)=>'<button class="chip fi" data-j="'+j+'">'+(f.kind==='crush'?'จดหมายถึงคุณ':'ดอกบัวที่จับได้')+' · '+new Date(Number(f.created)).toLocaleDateString('th-TH',{day:'numeric',month:'short'})+'</button>').join(' '):'<p class="sub">ยังไม่มีดอกบัวมาถึง</p>'}
+async function send(){if(!me){$('lm').classList.add('on');return}
+const x=$('fx').value.trim(),sg=$('fsong').value.trim(),code=fm==='crush'?$('fcode').value.trim().toUpperCase():null;
+if(!x)return msg('เขียนข้อความก่อนนะ');if(sg&&!songInfo(sg))return msg('ลิงก์เพลงไม่รองรับ');if(fm==='crush'&&!code)return msg('ใส่รหัสของเขาก่อน');
+msg('กำลังลอย…');const{error}=await sb.rpc('send_lotus',{p_x:x,p_m:mood,p_song:sg||null,p_style:st,p_code:code});
+if(error)return msg(error.message);
+$('fx').value='';$('fsong').value='';msg(fm==='crush'?'ส่งถึงเขาแล้ว เขาจะเห็นว่ามีคนส่งมา แต่ไม่รู้ว่าใคร':'ดอกบัวลอยออกไปแล้ว รอใครสักคนจับได้');
+const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('class','sail');s.setAttribute('viewBox','0 0 24 24');s.innerHTML='<use href="#i-lotus"/>';const pw=$('pondwrap');pw.appendChild(s);pw.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>s.remove(),4800)}
+async function pick(){if(!me){$('lm').classList.add('on');return}msg('กำลังมองหา…');const{data,error}=await sb.rpc('catch_lotus');if(error)return msg(error.message);const f=data&&data[0];if(!f)return msg('ตอนนี้ยังไม่มีดอกบัวลอยมา ลองใหม่อีกที');msg('');card(f,'จากใครสักคนที่ไม่รู้จัก');loadF()}
+$('fl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+if(b.dataset.fm){fm=b.dataset.fm;document.querySelectorAll('[data-fm]').forEach(x=>x.classList.toggle('on',x===b));$('fcode').hidden=fm!=='crush'}
+else if(b.dataset.st){st=b.dataset.st;document.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('on',x===b))}
+else if(b.id==='fsend')send();else if(b.id==='fcatch')pick();
+else if(b.classList.contains('fi')){const f=inb[+b.dataset.j];card(f,f.kind==='crush'?'จากใครบางคนที่แอบคิดถึงคุณ':'จากใครสักคนที่ไม่รู้จัก')}
+else if(b.id==='cpc'){navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.querySelector('.code').textContent);b.textContent='คัดลอกแล้ว'}});
+if(sb)sb.auth.onAuthStateChange(()=>setTimeout(loadF,700));setTimeout(loadF,1500);
+})();
 </script>
 </body>
 </html>
