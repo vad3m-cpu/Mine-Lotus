@@ -164,7 +164,7 @@ body{overflow-x:hidden}
 @keyframes spin{to{transform:rotate(360deg)}}
 .mp .sub{flex:1;color:inherit;opacity:.75}
 .mpb{border:0;border-radius:50%;width:36px;height:36px;background:var(--pink);color:#fff;cursor:pointer}
-#fsong,#pfn,#vcode,#fl textarea{width:100%;margin:8px 0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+#fsong,#pfn,#vcode,#vq,#fl textarea{width:100%;margin:8px 0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
 #fl textarea{border-style:dashed;border-color:var(--pink)}
 .code{letter-spacing:.18em;font-weight:400;color:var(--leaf)}
 .sail{position:absolute;z-index:6;left:46%;bottom:14px;width:64px;pointer-events:none;filter:drop-shadow(0 0 14px #fff8);animation:sail 4.6s ease-in forwards}
@@ -303,13 +303,14 @@ html.calm #lots,html.calm .pad{transform:none;translate:none}
 <div class="row"><span class="sub" id="fmsg"></span><span><button class="save" id="fcatch" style="background:var(--pink)">เก็บเมล็ดบัว</button> <button class="save" id="fsend">ปลูกเลย</button></span></div>
 <div id="fin" style="margin-top:8px"></div></div>
 <div class="card" id="vc" style="margin-top:16px"><p class="prompt">เยี่ยมบ่อ</p>
-<p class="sub" style="margin:0 0 8px">เลือกบ่อที่เปิดให้เยี่ยมชมได้เลย ไม่ต้องใส่รหัส</p><div class="row" style="justify-content:flex-start"><button class="save" id="vrand">สุ่มเยี่ยมบ่อ</button><button class="chip" id="vref">รีเฟรชรายการ</button></div>
+<p class="sub" style="margin:0 0 8px">เลือกบ่อที่เปิดให้เยี่ยมชมได้เลย ไม่ต้องใส่รหัส</p><div class="row" style="justify-content:flex-start"><button class="save" id="vrand">สุ่มเยี่ยมบ่อ</button><button class="chip" id="vref">รีเฟรชรายการ</button></div><input id="vq" placeholder="ค้นหาชื่อบ่อ" autocomplete="off" style="margin:10px 0 0">
 <div class="sub" id="vmsg" style="min-height:1.4em"></div><div class="pl" id="pl"></div><div class="sub" id="fmine" style="margin-top:10px"></div></div>
 <details class="card" id="pfc" style="margin-top:16px"><summary style="cursor:pointer">โปรไฟล์และหน้าตาบ่อของฉัน</summary>
 <div class="pfr"><img id="pfa-i" class="pfa" alt=""><label class="chip">เปลี่ยนรูปโปรไฟล์ (png / gif)<input type="file" id="pfa" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label></div>
 <input id="pfn" maxlength="30" placeholder="ชื่อที่แสดง" autocomplete="off">
 <div class="row" style="justify-content:flex-start;margin:8px 0"><label class="chip">ภาพพื้นบ่อ<input type="file" id="pfb" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pfbx">ล้าง</button><label class="chip">ภาพดอกบัวของฉัน<input type="file" id="pfl" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><button class="chip" id="pflx">ล้าง</button></div>
 <label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pfp" checked> ให้คนอื่นเยี่ยมบ่อของฉันได้ (เห็นเฉพาะโน้ตที่เปิดให้เห็น)</label>
+<label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="pubdef"> โน้ตใหม่ให้คนเยี่ยมบ่อเห็นเป็นค่าเริ่มต้น</label><div style="margin:6px 0"><button class="chip" id="puball">เปิดให้เยี่ยมชมเห็นโน้ตเก่าทั้งหมด</button> <span class="sub">(ยกเว้นที่ซ่อน 🔒 และโน้ตการนอน)</span></div>
 <label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="calm"> ลดแอนิเมชัน</label>
 <div class="row"><span class="sub" id="pfm"></span><button class="save" id="pfs">บันทึกโปรไฟล์</button></div></details>
 <details class="card" style="margin-top:22px"><summary style="cursor:pointer">☁️ ย้ายโน้ตไปเครื่องอื่น (สำรอง / นำเข้า)</summary><p class="sub" style="margin:10px 0">กด “คัดลอกโค้ด” ในเครื่องเดิม แล้วนำไปวางในกล่องนี้บนเครื่องใหม่ แล้วกด “นำเข้า” (ไม่ต้องล็อกอิน)</p><textarea id="bk" style="min-height:70px" placeholder="วางโค้ดสำรองที่นี่…"></textarea><div class="row"><span class="sub" id="bkmsg"></span><span><button class="save" id="exp" style="background:var(--pink)">คัดลอกโค้ด</button> <button class="save" id="imp">นำเข้า</button></span></div></details>
@@ -423,8 +424,8 @@ const x=$('txt').value.trim(),sg=$('song').value.trim();if(sg&&!songInfo(sg)){$(
 if(!x&&!pendingImg&&!sg&&tab!=='sleep')return;
 const n={id:Date.now(),t:tab,m:mood,x,d:Date.now(),img:pendingImg,song:sg||null,lock:$('lk').checked,pin:false,pub:$('pubk').checked&&!$('lk').checked&&tab!=='sleep',sl:tab==='sleep'?{b:$('sb').value,w:$('sw').value,q:+$('sq').dataset.v,tg:[...document.querySelectorAll('#tgs .chip.on')].map(b=>b.dataset.g)}:null};
 notes.unshift(n);fresh=n.id;
-document.querySelectorAll('#tgs .chip.on').forEach(b=>b.classList.remove('on'));pendingImg=null;$('thumb').textContent='';$('song').value='';$('songmsg').textContent='';$('lk').checked=false;$('pubk').checked=false;store();$('txt').value='';render();
-if(me)sb.from('notes').insert(row(n)).then(()=>{});
+document.querySelectorAll('#tgs .chip.on').forEach(b=>b.classList.remove('on'));pendingImg=null;$('thumb').textContent='';$('song').value='';$('songmsg').textContent='';$('lk').checked=false;$('pubk').checked=localStorage.getItem('lotus-pubdef')==='1';store();$('txt').value='';render();
+if(me)sb.from('notes').insert(row(n)).then(r=>{if(r.error)alert('บันทึกขึ้นระบบไม่สำเร็จ คนอื่นจะยังไม่เห็นโน้ตนี้: '+r.error.message+' (รัน schema.sql ล่าสุดแล้วหรือยัง)')});
 };
 $('list').onclick=e=>{const pl=e.target.closest('.plays');if(pl){const n=notes.find(x=>String(x.id)===pl.dataset.id);if(n){pl.parentElement.outerHTML=songEl(n.song,true)}return}
 const b=e.target.closest('.del');if(!b)return;
@@ -446,20 +447,22 @@ const prev=me;me=u;const a=$('auth');
 if(!u){
 a.innerHTML='<button class="save" id="lg">เข้าสู่ระบบ</button>';$('gate').style.display='block';
 $('lg').onclick=$('lg2').onclick=()=>$('lm').classList.add('on');
-if(prev){notes=[];store();render()}
+if(prev){try{localStorage.setItem('lotus-notes-'+prev.id,JSON.stringify(notes))}catch(e){}notes=[];store();render()}
 return}
 const md=u.user_metadata||{};$('gate').style.display='none';$('lm').classList.remove('on');
 const av=(PF.avatar||md.avatar_url||'').replace(/"/g,'');
 a.innerHTML=(av?'<img src="'+av+'" alt="">':'')+'<span class="sub">'+esc(PF.name||md.full_name||md.name||u.email||'บัญชีของฉัน')+'</span><button class="tab" id="lo">ออก</button>';
-$('lo').onclick=()=>sb.auth.signOut();
+$('lo').onclick=()=>{if($('sync').textContent&&!confirm('ยังมีโน้ตที่ไม่ขึ้นระบบ ถ้าออกตอนนี้จะซ่อนไว้ในเครื่องนี้จนกว่าจะล็อกอินบัญชีเดิม ออกไหม?'))return;sb.auth.signOut()};
+try{const bk=JSON.parse(localStorage.getItem('lotus-notes-'+u.id)||'[]'),hv=new Set(notes.map(n=>String(n.id)));bk.forEach(n=>{if(n&&n.id&&!hv.has(String(n.id)))notes.push(n)});notes.sort((a,b)=>b.d-a.d)}catch(e){}
 await pull();
 }
 async function pull(){
 const {data,error}=await sb.from('notes').select('*').order('d',{ascending:false});
-if(error||!data)return;
+if(error||!data){$('sync').textContent='โหลดโน้ตจากระบบไม่สำเร็จ: '+(error?error.message:'');return}
 const have=new Set(data.map(r=>String(r.id)));
 const extra=notes.filter(n=>!have.has(String(n.id)));
-if(extra.length)await sb.from('notes').insert(extra.map(row));
+let bad=null;if(extra.length){const r=await sb.from('notes').insert(extra.map(row));bad=r.error}
+$('sync').textContent=bad?'มี '+extra.length+' โน้ตที่ยังไม่ขึ้นระบบ (เก็บไว้ในเครื่องนี้ก่อน): '+bad.message+' · ลองรัน schema.sql ล่าสุดใน Supabase':'';if(!bad&&me)try{localStorage.removeItem('lotus-notes-'+me.id)}catch(e){}
 notes=[...data.map(r=>({id:Number(r.id),t:r.t,m:r.m,x:r.x,d:Number(r.d),img:r.img,lock:r.locked,pin:r.pin,pub:r.pub,src:r.src,sl:r.sl,song:r.song||null})),...extra].sort((a,b)=>b.d-a.d);
 store();render();
 }
@@ -580,6 +583,8 @@ const pick=(id,key)=>{$(id).onchange=async e=>{const u=await up(e.target.files[0
 pick('pfa','avatar');pick('pfb','pond_bg');pick('pfl','lotus_img');
 $('pfbx').onclick=()=>{PF.pond_bg=null;saveP()};$('pflx').onclick=()=>{PF.lotus_img=null;saveP()};
 $('pfs').onclick=()=>{if(!me){$('lm').classList.add('on');return}PF.name=$('pfn').value.trim();PF.pond_public=$('pfp').checked;saveP()};
+const pd=$('pubdef');pd.checked=localStorage.getItem('lotus-pubdef')==='1';$('pubk').checked=pd.checked;pd.onchange=()=>{try{localStorage.setItem('lotus-pubdef',pd.checked?'1':'0')}catch(e){}$('pubk').checked=pd.checked};
+$('puball').onclick=()=>{const l=notes.filter(n=>!n.lock&&n.t!=='sleep'&&!n.pub);if(!l.length){pfm('ไม่มีโน้ตที่ต้องเปิด');return}if(!confirm('เปิดให้คนที่มาเยี่ยมบ่อเห็นโน้ตเก่า '+l.length+' โน้ต?'))return;l.forEach(n=>n.pub=true);store();render();if(me)sb.from('notes').update({pub:true}).in('id',l.map(n=>n.id)).then(r=>pfm(r.error?r.error.message:'เปิดให้เห็นแล้ว '+l.length+' โน้ต'))};
 const calm=$('calm');calm.checked=CALM();calm.onchange=()=>{document.documentElement.classList.toggle('calm',calm.checked);try{localStorage.setItem('lotus-calm',calm.checked?'1':'0')}catch(e){}};
 /* ---- การ์ดเมล็ดบัว ---- */
 function rain(){const r=$('lcr');r.innerHTML='';if(CALM())return;for(let i=0;i<26;i++){const p=document.createElement('i');p.className='fp';p.style.cssText='left:'+R(0,100)+'%;--sx:'+R(-90,90)+'px;--ty:'+R(5,90)+'vh;top:'+(st==='night'?R(2,95)+'%':'-24px')+';animation-duration:'+R(st==='night'?3:6,st==='night'?6:11)+'s;animation-delay:'+(-R(0,9))+'s';if(i%3==0&&st!=='night')p.style.background='var(--green)';r.appendChild(p)}}
@@ -624,8 +629,10 @@ $('vlist').addEventListener('click',e=>{const b=e.target.closest('.vpl2');if(!b)
 async function visit(c){c=(c||'').trim().toUpperCase();if(!c)return vmsg('ใส่รหัสบ่อก่อนนะ');if(!me){$('lm').classList.add('on');return}vmsg('กำลังเดินไปที่บ่อ…');const{data,error}=await sb.rpc('visit_pond',{p_code:c});if(error)return vmsg(error.message);vmsg('');openV(data)}
 async function rnd(){if(!me){$('lm').classList.add('on');return}vmsg('กำลังสุ่มบ่อ…');const{data,error}=await sb.rpc('random_pond');if(error)return vmsg(error.message);if(!data)return vmsg('ตอนนี้ยังไม่มีบ่อที่เปิดให้เยี่ยมชม');visit(data)}
 $('vrand').onclick=$('vnext').onclick=rnd;
-async function loadL(){const el=$('pl');if(!sb||!me){el.innerHTML='';return}const{data,error}=await sb.rpc('list_ponds');if(error){el.innerHTML='<p class="sub">ยังใช้ไม่ได้: รันไฟล์ schema.sql ใหม่ใน Supabase ก่อน</p>';return}
-el.innerHTML=(data&&data.length)?data.map(p=>'<button class="pc" data-c="'+esc(p.code)+'"><img src="'+(su(p.avatar)||BLANK)+'" alt=""><b>'+esc(p.name)+'</b><span class="sub">'+p.cnt+' ข้อความ</span></button>').join(''):'<p class="sub">ยังไม่มีบ่อที่เปิดให้เยี่ยมชม · ลองเปิดโน้ตของตัวเองให้คนเห็นก่อน</p>'}
+let ponds=[];
+function rl(){const q=($('vq').value||'').trim().toLowerCase(),l=ponds.filter(p=>!q||String(p.name).toLowerCase().includes(q));$('pl').innerHTML=l.length?l.map(p=>'<button class="pc" data-c="'+esc(p.code)+'"><img src="'+(su(p.avatar)||BLANK)+'" alt=""><b>'+esc(p.name)+'</b><span class="sub">'+(p.cnt?p.cnt+' ข้อความ':'ยังไม่มีข้อความ')+'</span></button>').join(''):'<p class="sub">'+(q?'ไม่พบบ่อชื่อนี้':'ยังไม่มีบ่ออื่นที่เปิดให้เยี่ยมชม')+'</p>'}
+async function loadL(){if(!sb||!me){$('pl').innerHTML='';return}const{data,error}=await sb.rpc('list_ponds');if(error){$('pl').innerHTML='<p class="sub">ยังใช้ไม่ได้: รันไฟล์ schema.sql ใหม่ใน Supabase ก่อน ('+esc(error.message)+')</p>';return}ponds=data||[];rl()}
+$('vq').oninput=rl;
 $('pl').addEventListener('click',e=>{const b=e.target.closest('.pc');if(b)visit(b.dataset.c)});$('vref').onclick=loadL;
 $('vc').addEventListener('click',e=>{const b=e.target.closest('#cpc');if(!b||!code)return;const u=location.origin+location.pathname+'?pond='+code;navigator.clipboard&&navigator.clipboard.writeText(u);b.textContent='คัดลอกลิงก์แล้ว'});
 /* ---- แอนิเมชันบน PC: บ่อขยับตามเมาส์ + ระลอกน้ำตามเคอร์เซอร์ ---- */
