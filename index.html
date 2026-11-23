@@ -230,7 +230,7 @@ html.calm #lots,html.calm .pad{transform:none;translate:none}
 #pm,#bm{display:none;position:fixed;inset:0;z-index:72;background:#0006;backdrop-filter:blur(8px);justify-content:center;padding:18px;overflow-y:auto}
 #pm.on,#bm.on{display:flex}
 .pmc{width:100%;max-width:440px;background:var(--bg);margin:auto}
-.pmh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.pmh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}.pmh .bj{align-items:center}
 .pmv{position:relative;height:104px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,var(--w1),var(--w2) 55%,var(--w3)) center/cover}
 .pmvt{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;background:var(--card);backdrop-filter:blur(8px);max-width:calc(100% - 20px)}
 .pmvt b{font-weight:400}.pmvt .sub{font-size:.74rem}
@@ -258,7 +258,7 @@ button,.chip,.tab,.save,.pc,.lt{-webkit-tap-highlight-color:transparent;touch-ac
 .pmp[hidden]{display:none}
 .pmp .row{margin-top:8px}
 .pgn,#lg3{display:none}
-#pm[data-g="1"] .pgn{display:block;margin:0 0 10px}#pm[data-g="1"] #lg3{display:inline-block;margin-bottom:10px}
+#pm[data-g="1"] .pgn{display:block;margin:0 0 10px}#pm[data-g="1"] #lg3{display:inline-block;padding:7px 16px}
 #pm[data-g="1"] [data-pt="me"],#pm[data-g="1"] [data-pt="pond"],#pm[data-g="1"] [data-pt="priv"],#pm[data-g="1"] .pmf,#pm[data-g="1"] #lo{display:none}
 .stt{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}.stt span{padding:6px 14px;border-radius:999px;background:var(--pink2);font-size:.85rem}
 .dsb{margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line)}
@@ -378,7 +378,7 @@ button,.chip,.tab,.save,.pc,.lt{-webkit-tap-highlight-color:transparent;touch-ac
 <div id="lc" role="dialog" aria-label="ดอกบัวที่ลอยมา"><div id="lcr"></div><div id="lcb"></div><button class="chip" id="lcx">ปิดการ์ด</button></div>
 <div id="br" role="dialog" aria-label="หายใจ"><div class="orb"><svg viewBox="0 0 24 24"><use href="#i-lotus"/></svg></div><div class="bt"></div><div class="sub bc"></div><div class="sub">เข้า 4 · กลั้น 7 · ออก 8</div><button class="chip" id="bx">ปิด</button></div>
 <div id="pm" role="dialog" aria-label="บัญชีของฉัน"><div class="card pmc">
-<div class="pmh"><p class="prompt" style="margin:0">บัญชีของฉัน</p><button class="chip" id="pmx" type="button">ปิด</button></div>
+<div class="pmh"><p class="prompt" style="margin:0">บัญชีของฉัน</p><span class="bj"><button class="save" id="lg3" type="button">🔗 เข้าสู่ระบบ</button><button class="chip" id="lo" type="button">↪ ออกจากระบบ</button><button class="chip" id="pmx" type="button">ปิด</button></span></div>
 <div class="pmt" id="pmt"><button class="tab on" type="button" data-pt="me">โปรไฟล์</button><button class="tab" type="button" data-pt="pond">บ่อ</button><button class="tab" type="button" data-pt="priv">ความเป็นส่วนตัว</button><button class="tab" type="button" data-pt="gen">ทั่วไป</button></div>
 <div class="pmp" data-p="me">
 <div class="pfr"><img id="pfa-i" class="pfa" alt=""><div><label class="chip">เปลี่ยนรูปโปรไฟล์ (png / gif)<input type="file" id="pfa" accept="image/png,image/gif,image/jpeg,image/webp" hidden></label><div class="sub" id="pmem" style="margin-top:6px;word-break:break-all"></div></div></div>
@@ -400,12 +400,11 @@ button,.chip,.tab,.save,.pc,.lt{-webkit-tap-highlight-color:transparent;touch-ac
 <p class="sub">ชื่อจริงและรูปโปรไฟล์จะถูกซ่อนจากคนแปลกหน้าเสมอ จนกว่าจะรับเป็นเพื่อน</p>
 </div>
 <div class="pmp" data-p="gen" hidden>
-<p class="sub pgn">เข้าสู่ระบบเพื่อตั้งชื่อ ปรับหน้าตาบ่อ และเพิ่มเพื่อน</p><button class="save" id="lg3" type="button">เข้าสู่ระบบ</button>
+<p class="sub pgn">เข้าสู่ระบบเพื่อตั้งชื่อ ปรับหน้าตาบ่อ และเพิ่มเพื่อน</p>
 <div class="stt" id="stt"></div>
 <label class="sub" style="display:block;margin:6px 0"><input type="checkbox" id="calm"> ลดแอนิเมชัน</label>
 <p class="sub dsb">☁️ สำรอง / ย้ายโน้ตไปเครื่องอื่น</p>
 <p class="sub" style="margin:6px 0">กด “คัดลอกโค้ด” ในเครื่องเดิม แล้วนำไปวางในกล่องนี้บนเครื่องใหม่ แล้วกด “นำเข้า” (ไม่ต้องล็อกอิน)</p><textarea id="bk" style="min-height:70px" placeholder="วางโค้ดสำรองที่นี่…"></textarea><div class="row"><span class="sub" id="bkmsg"></span><span><button class="save" id="exp" type="button" style="background:var(--pink)">คัดลอกโค้ด</button> <button class="save" id="imp" type="button">นำเข้า</button></span></div>
-<div class="dsb"><button class="tab" id="lo" type="button">ออกจากระบบ</button></div>
 </div>
 <div class="row pmf"><span class="sub" id="pfm"></span><button class="save" id="pfs" type="button">บันทึก</button></div></div></div>
 <div id="bm" role="dialog" aria-label="กล่องจดหมายบ่อ"><div class="card pmc"><div class="pmh"><p class="prompt" style="margin:0">กล่องจดหมายบ่อ</p><button class="chip" id="bmx" type="button">ปิด</button></div><div id="bmb"></div></div></div>
