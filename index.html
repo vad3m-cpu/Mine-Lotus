@@ -193,7 +193,7 @@ body{overflow-x:hidden}
 html.calm .fp,html.calm .lcf,html.calm .lcf::after,html.calm .lcs svg,html.calm .vin,html.calm .bf{animation:none!important}
 
 /* ---- v3 ---- */
-.auth img{object-fit:cover}
+.auth img{object-fit:cover;cursor:pointer;background:var(--pink2);transition:box-shadow .2s}.auth img:hover{box-shadow:0 0 0 3px var(--pink)}
 #vcode{flex:1;width:auto;min-width:0;margin:0}
 .pond.cb .pad,.pond.cb .rip{display:none}
 .lt .cu{border:0;border-radius:0;background:none;box-shadow:none;object-fit:contain;transform:none;filter:drop-shadow(0 4px 6px #0004)}
@@ -571,11 +571,12 @@ window.togglePub=id=>{const n=notes.find(x=>String(x.id)===String(id));if(!n||n.
 $('list').addEventListener('click',e=>{const b=e.target.closest('.pubt');if(b)togglePub(b.dataset.id)});
 function plant(n,from){const m={id:Date.now(),t:'free',m:n.m||'🌸',x:n.x||'',d:Date.now(),img:su(n.img)||null,song:n.song||null,lock:false,pin:false,pub:false,sl:null,src:from||'คนแปลกหน้า'};notes.unshift(m);fresh=m.id;store();render();if(me)sb.from('notes').insert(row(m)).then(()=>{})}
 /* ---- โปรไฟล์ ---- */
-function hdr(){if(!me)return;const a=$('auth'),md=me.user_metadata||{},av=su(PF.avatar)||su(md.avatar_url),sp=a.querySelector('span.sub');if(sp)sp.textContent=PF.name||md.full_name||md.name||me.email||'บัญชีของฉัน';let im=a.querySelector('img');if(av){if(!im){im=new Image();im.alt='';a.prepend(im)}im.src=av}}
+function hdr(){if(!me)return;const a=$('auth'),md=me.user_metadata||{},av=su(PF.avatar)||su(md.avatar_url),sp=a.querySelector('span.sub');if(sp)sp.textContent=PF.name||md.full_name||md.name||me.email||'บัญชีของฉัน';let im=a.querySelector('img');if(!im){im=new Image();im.alt='';a.prepend(im)}im.src=av||BLANK;im.title='กดเพื่อเปลี่ยนรูปโปรไฟล์'}
+$('auth').addEventListener('click',e=>{if(e.target.closest('img'))$('pfa').click()});
 function applyPF(){const pw=$('pondwrap'),bg=su(PF.pond_bg);pw.classList.toggle('cb',!!bg);pw.style.backgroundImage=bg?'url("'+bg+'")':(POND_PHOTO?'linear-gradient(#0000,#0003),url('+POND_PHOTO+')':'');hdr();$('pfa-i').src=su(PF.avatar)||BLANK;$('pfn').value=PF.name||'';$('pfp').checked=PF.pond_public!==false;pond();try{localStorage.setItem('lotus-pf',JSON.stringify(PF))}catch(e){}}
 async function loadP(){const{data,error}=await sb.rpc('my_profile');if(error||!data||!data[0])return;const p=data[0];PF={name:p.name,avatar:p.avatar,pond_bg:p.pond_bg,lotus_img:p.lotus_img,pond_public:p.pond_public};code=p.code;applyPF();$('fmine').innerHTML='รหัสบ่อของฉัน <b class="code">'+esc(code)+'</b> <button class="chip" id="cpc">คัดลอกลิงก์เชิญเยี่ยมบ่อ</button>'}
 async function saveP(){if(!me)return;const{error}=await sb.rpc('save_profile',{p_name:PF.name||null,p_avatar:PF.avatar||null,p_bg:PF.pond_bg||null,p_lotus:PF.lotus_img||null,p_public:PF.pond_public!==false});pfm(error?error.message:'บันทึกแล้ว');applyPF()}
-const pick=(id,key)=>{$(id).onchange=async e=>{const u=await up(e.target.files[0],pfm);e.target.value='';if(u){PF[key]=u;saveP()}}};
+const pick=(id,key)=>{$(id).onchange=async e=>{const u=await up(e.target.files[0],t=>{pfm(t);if(t)alert(t)});e.target.value='';if(u){PF[key]=u;saveP()}}};
 pick('pfa','avatar');pick('pfb','pond_bg');pick('pfl','lotus_img');
 $('pfbx').onclick=()=>{PF.pond_bg=null;saveP()};$('pflx').onclick=()=>{PF.lotus_img=null;saveP()};
 $('pfs').onclick=()=>{if(!me){$('lm').classList.add('on');return}PF.name=$('pfn').value.trim();PF.pond_public=$('pfp').checked;saveP()};
